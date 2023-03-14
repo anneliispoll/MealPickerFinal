@@ -1,6 +1,5 @@
 package com.MealPicker.auth;
 
-
 import com.MealPicker.security.config.JwtService;
 import com.MealPicker.token.Token;
 import com.MealPicker.token.TokenRepository;

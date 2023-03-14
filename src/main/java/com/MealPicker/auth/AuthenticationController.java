@@ -2,6 +2,7 @@ package com.MealPicker.auth;
 
 import com.MealPicker.user.Role;
 import com.MealPicker.user.User;
+import com.MealPicker.user.UserRepository;
 import com.MealPicker.user.UserServices;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,32 +18,39 @@ public class AuthenticationController {
     private final AuthenticationService service;
     private final UserServices userServices;
 
+    private final UserRepository userRepository;
+
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request, HttpServletResponse response
     ) {
-        AuthenticationResponse authResponse = service.register(request);
-        User user = User.builder()
-                .email(request.getEmail())
-                .password(request.getPassword())
-                .role(Role.USER)
-                .build();
-        userServices.addUser(user);
 
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-        response.setHeader("Access-Control-Max-Age", "86400");
+            if (userRepository.existsByEmail(request.getEmail())) {
+                throw new EmailAlreadyExistsException("Email already exists");
+            }
 
-        return ResponseEntity.ok(authResponse);
+            AuthenticationResponse authResponse = service.register(request);
+            User user = User.builder()
+                    .firstname(request.getFirstname())
+                    .lastname(request.getLastname())
+                    .email(request.getEmail())
+                    .password(request.getPassword())
+                    .role(Role.USER)
+                    .build();
+            userServices.addUser(user);
 
+            response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+            response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+            response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+            response.setHeader("Access-Control-Max-Age", "86400");
+
+            return ResponseEntity.ok(authResponse);
     }
+
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
     ) {
         return ResponseEntity.ok(service.authenticate(request));
     }
-
-
 }
