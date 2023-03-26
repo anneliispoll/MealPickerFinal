@@ -38,6 +38,7 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        System.out.println("\n \n \n \n " + request.getEmail() + " " + request.getPassword() + "\n \n \n ");
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
