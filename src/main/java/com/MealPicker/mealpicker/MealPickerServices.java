@@ -9,7 +9,7 @@ public class MealPickerServices {
     @Autowired
     private MealRepository mealRepository;
 
-    public Meal getRandomMealBySeasonAndMealTime(String seasonName, String mealTimeName) {
+    public String getRandomMealBySeasonAndMealTime(String seasonName, String mealTimeName) {
         return mealRepository.findRandomMealBySeasonAndMealTime(seasonName, mealTimeName);
     }
 

@@ -9,11 +9,15 @@ import org.springframework.stereotype.Repository;
 public interface MealRepository extends JpaRepository<Meal, Integer> {
 
 
-        @Query("SELECT m FROM Meal m " +
-                "WHERE m.id IN (SELECT ms.meal.id FROM MealSeason ms WHERE ms.season.name = :seasonName) " +
-                "AND m.id IN (SELECT mmt.meal.id FROM MealMealTime mmt WHERE mmt.mealTime.name = :mealTimeName) " +
-                "ORDER BY RAND()")
-        Meal findRandomMealBySeasonAndMealTime(@Param("seasonName") String seasonName,
-                                               @Param("mealTimeName") String mealTimeName);
+    @Query(nativeQuery = true, value = "SELECT m.meal_name " +
+            "FROM meals m " +
+            "INNER JOIN meal_seasons ms ON m.MealID = ms.MealID " +
+            "INNER JOIN seasons s ON ms.SeasonID = s.SeasonID " +
+            "INNER JOIN meal_meal_times mmt ON m.MealID = mmt.MealID " +
+            "INNER JOIN meal_times mt ON mmt.MealTimeID = mt.MealTimeID " +
+            "WHERE s.SeasonName = :seasonName AND mt.MealTimeName = :mealTimeName " +
+            "ORDER BY RAND() " +
+            "LIMIT 1")
+    String findRandomMealBySeasonAndMealTime(@Param("seasonName") String seasonName, @Param("mealTimeName") String mealTimeName);
 
     }

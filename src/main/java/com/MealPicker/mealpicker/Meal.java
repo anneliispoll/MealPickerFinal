@@ -11,7 +11,7 @@ public class Meal {
     @Column(name = "MealID")
     private int id;
 
-    @Column(name = "MealName")
+    @Column(name = "meal_name")
     private String name;
 
 
@@ -23,7 +23,7 @@ public class Meal {
         this.id = id;
     }
 
-    public String getName() {
+    public String getName(String name) {
         return name;
     }
 

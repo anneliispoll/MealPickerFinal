@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/mealpicker")
+@RequestMapping("/mealpicker")
 @CrossOrigin(origins = "http://localhost:3000")
 public class MealController {
 
@@ -16,9 +16,9 @@ public class MealController {
 
 
     @GetMapping("/random")
-    public ResponseEntity<Meal> getRandomMeal(@RequestParam("season") String seasonName,
-                                              @RequestParam("mealTime") String mealTimeName) {
-        Meal meal = mealPickerServices.getRandomMealBySeasonAndMealTime(seasonName, mealTimeName);
+    public ResponseEntity<String> getRandomMeal(@RequestParam("seasonName") String seasonName,
+                                                @RequestParam("mealTimeName") String mealTimeName) {
+        String meal = mealPickerServices.getRandomMealBySeasonAndMealTime(seasonName, mealTimeName);
         if (meal == null) {
             return ResponseEntity.notFound().build();
         }
