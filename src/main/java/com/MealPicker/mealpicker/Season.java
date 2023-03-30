@@ -3,17 +3,16 @@ package com.MealPicker.mealpicker;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name= "meals")
-public class Meal {
+@Table(name = "seasons")
+public class Season {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MealID")
+    @Column(name = "SeasonID")
     private int id;
 
-    @Column(name = "MealName")
+    @Column(name= "SeasonName")
     private String name;
-
 
     public int getId() {
         return id;
