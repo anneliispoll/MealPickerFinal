@@ -1,13 +1,10 @@
 package com.MealPicker.mealpicker;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-
+/*
 @RestController
-@RequestMapping("/mealpicker")
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/mealpicker")
+
 public class MealController {
 
 
@@ -15,9 +12,16 @@ public class MealController {
     private MealPickerServices mealPickerServices;
 
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/random")
     public ResponseEntity<String> getRandomMeal(@RequestParam("seasonName") String seasonName,
-                                                @RequestParam("mealTimeName") String mealTimeName) {
+                                                @RequestParam("mealTimeName") String mealTimeName,
+                                                HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setHeader("Access-Control-Max-Age", "86400");
+
         String meal = mealPickerServices.getRandomMealBySeasonAndMealTime(seasonName, mealTimeName);
         if (meal == null) {
             return ResponseEntity.notFound().build();
@@ -26,4 +30,4 @@ public class MealController {
 
         }
     }
-
+*/

@@ -1,7 +1,9 @@
 package com.MealPicker.auth;
 
+import com.MealPicker.mealpicker.MealPickerServices;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
 
     private final AuthenticationService service;
+    @Autowired
+    private MealPickerServices mealPickerServices;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
@@ -40,6 +44,23 @@ public class AuthenticationController {
         response.setHeader("Access-Control-Max-Age", "86400");
 
         return ResponseEntity.ok(service.authenticate(request));
+
+    }
+
+    @GetMapping("/random")
+    public ResponseEntity<String> getRandomMeal(@RequestParam("seasonName") String seasonName,
+                                                @RequestParam("mealTimeName") String mealTimeName,
+                                                HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setHeader("Access-Control-Max-Age", "86400");
+
+        String meal = mealPickerServices.getRandomMealBySeasonAndMealTime(seasonName, mealTimeName);
+        if (meal == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(meal);
 
     }
 }
