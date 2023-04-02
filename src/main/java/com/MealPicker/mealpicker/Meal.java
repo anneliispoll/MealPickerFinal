@@ -2,6 +2,9 @@ package com.MealPicker.mealpicker;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name= "meals")
 public class Meal {
@@ -14,6 +17,12 @@ public class Meal {
     @Column(name = "meal_name")
     private String name;
 
+    @ManyToMany(mappedBy = "meals")
+    private Set<Season> seasons = new HashSet<>();
+
+    @ManyToMany(mappedBy = "meals")
+    private Set<MealTime> mealTimes = new HashSet<>();
+
 
     public int getId() {
         return id;
@@ -23,11 +32,17 @@ public class Meal {
         this.id = id;
     }
 
-    public String getName(String name) {
+    public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void addSeason(Season season) {
+    }
+
+    public void addMealTime(MealTime mealTime) {
     }
 }

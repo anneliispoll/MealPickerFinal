@@ -3,6 +3,7 @@ package com.MealPicker.mealpicker;
 import jakarta.persistence.*;
 
 @Entity
+@IdClass(MealMealTimeId.class)
 @Table(name = "meal_meal_times")
 public class MealMealTime {
     @Id
