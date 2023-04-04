@@ -1,5 +1,6 @@
 package com.MealPicker.mealpicker;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,8 +12,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MealRequest {
+    @JsonProperty("name")
     private String name;
-    private List<String> seasonName;
-    private List<String> mealTimeName;
+    @JsonProperty("seasonNames")
+    private List<String> seasonNames;
+    @JsonProperty("mealTimeNames")
+    private List<String> mealTimeNames;
+
 
 }

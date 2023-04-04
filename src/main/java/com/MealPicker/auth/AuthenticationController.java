@@ -83,20 +83,24 @@ public class AuthenticationController {
         response.setHeader("Access-Control-Max-Age", "86400");
 
         String name = mealRequest.getName();
-        List<String> seasonName = mealRequest.getSeasonName();
-        List<String> mealTimeName = mealRequest.getMealTimeName();
 
         // Save the new meal to the database
-        mealPickerServices.addNewMeal(name);
+        Meal meal = mealPickerServices.addNewMeal(name);
+
+        // Find the meal ID of the newly added meal
+        Integer mealId = mealPickerServices.findMealIdByName(name);
+
+        // Get the ids of the seasons associated with the meal
+        List<Integer> seasonIds = mealPickerServices.getSeasonIdsByNames(mealRequest.getSeasonNames());
 
         // Save the meal's association with each season to the database
-        mealPickerServices.addMealToSeasons(name, seasonName);
+        mealPickerServices.addMealToSeasons(mealId, seasonIds);
+
+        // Get the ids of the meal times associated with the meal
+        List<Integer> mealTimeIds = mealPickerServices.getMealTimeIdsByNames(mealRequest.getMealTimeNames());
 
         // Save the meal's association with each meal time to the database
-        Meal meal = mealRepository.findByName(name).orElse(null);
-        if (meal != null) {
-            mealPickerServices.addMealToMealTimes(meal.getId(), mealTimeName);
-        }
+        mealPickerServices.addMealToMealTimes(mealId, mealTimeIds);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

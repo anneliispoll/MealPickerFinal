@@ -2,8 +2,8 @@ package com.MealPicker.mealpicker;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name= "meals")
@@ -17,11 +17,20 @@ public class Meal {
     @Column(name = "meal_name")
     private String name;
 
-    @ManyToMany(mappedBy = "meals")
-    private Set<Season> seasons = new HashSet<>();
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "meal_seasons",
+            joinColumns = @JoinColumn(name = "MealID"),
+            inverseJoinColumns = @JoinColumn(name = "SeasonID")
+    )
+    @OrderColumn(name = "season_order")
+    private List<Season> seasons = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "meals")
-    private Set<MealTime> mealTimes = new HashSet<>();
+
+
+    public Meal(String name) {
+        this.name = name;
+    }
 
 
     public int getId() {

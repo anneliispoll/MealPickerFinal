@@ -23,6 +23,7 @@ public class Season {
             joinColumns = { @JoinColumn(name = "SeasonID") },
             inverseJoinColumns = { @JoinColumn(name = "MealID") }
     )
+
     private Set<Meal> meals = new HashSet<>();
 
     public int getId() {

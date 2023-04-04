@@ -13,7 +13,7 @@ public class MealMealTime {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "MealTimeID")
+    @JoinColumn(name = "meal_timeid")
     private MealTime mealTime;
 
     public Meal getMeal() {

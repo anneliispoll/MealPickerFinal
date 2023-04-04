@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,9 +19,13 @@ public class MealPickerServices {
     private MealTimeRepository mealTimeRepository;
 
 
-    public MealPickerServices(MealRepository mealRepository) {
+    public MealPickerServices(MealRepository mealRepository, MealTimeRepository mealTimeRepository,
+                              SeasonRepository seasonRepository) {
         this.mealRepository = mealRepository;
+        this.mealTimeRepository = mealTimeRepository;
+        this.seasonRepository = seasonRepository;
     }
+
 
     public String getRandomMealBySeasonAndMealTime(String seasonName, String mealTimeName) {
         return mealRepository.findRandomMealBySeasonAndMealTime(seasonName, mealTimeName);
@@ -28,33 +33,55 @@ public class MealPickerServices {
 
     @Transactional
     @Modifying
-    public void addNewMeal(String name) {
-        mealRepository.addNewMeal(name);
+    public Meal addNewMeal(String name) {
+        Meal meal = new Meal(name);
+        return mealRepository.save(meal);
     }
 
-    @Transactional
-    @Modifying
-    public void addMealToSeasons(String name, List<String> seasonName) {
-        Optional<Meal> meal = mealRepository.findByName(name);
-        if (meal.isPresent()) {
-            for (String s : seasonName) {
-                Optional<Season> season = Optional.ofNullable(seasonRepository.findByName(s));
-                if (season.isPresent()) {
-                    meal.get().addSeason(season.get());
-                }
+    public Integer findMealIdByName (String name) {
+        return mealRepository.findIdByName(name);
+    }
+
+    public List<Integer> getSeasonIdsByNames(List<String> seasonNames) {
+        List<Integer> seasonIds = new ArrayList<>();
+        for (String seasonName : seasonNames) {
+            Optional<Season> season = seasonRepository.findByName(seasonName);
+            if (season.isPresent()) {
+                seasonIds.add(season.get().getId());
             }
         }
+        return seasonIds;
     }
+
 
     @Transactional
     @Modifying
-    public void addMealToMealTimes(int mealId, List<String> mealTimeName) {
-        for (String s : mealTimeName) {
-            Optional<MealTime> mealTime = Optional.ofNullable(mealTimeRepository.findByName(s));
+    public void addMealToSeasons(int mealId, List<Integer> seasonIds) {
+        mealRepository.addMealToSeasons(mealId, seasonIds);
+    }
+
+
+    @Transactional
+    @Modifying
+    public List<Integer> getMealTimeIdsByNames(List<String> mealTimeNames) {
+        List<Integer> mealTimeIds = new ArrayList<>();
+        for (String mealTimeName : mealTimeNames) {
+            Optional<MealTime> mealTime = mealTimeRepository.findByName(mealTimeName);
             if (mealTime.isPresent()) {
-                mealTime.get().addMeal(mealRepository.getOne(mealId));
+                mealTimeIds.add(mealTime.get().getId());
             }
         }
+        return mealTimeIds;
     }
+
+    @Transactional
+    @Modifying
+    public void addMealToMealTimes(int mealId, List<Integer> mealTimeIds) {
+                mealRepository.addMealToMealTimes(mealId, mealTimeIds);
+            }
         }
+
+
+
+
 
