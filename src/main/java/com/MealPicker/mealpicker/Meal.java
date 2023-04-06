@@ -17,6 +17,8 @@ public class Meal {
     @Column(name = "meal_name")
     private String name;
 
+
+
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "meal_seasons",
@@ -33,14 +35,6 @@ public class Meal {
     }
 
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -49,9 +43,4 @@ public class Meal {
         this.name = name;
     }
 
-    public void addSeason(Season season) {
-    }
-
-    public void addMealTime(MealTime mealTime) {
-    }
 }

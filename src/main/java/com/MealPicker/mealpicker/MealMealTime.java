@@ -16,19 +16,4 @@ public class MealMealTime {
     @JoinColumn(name = "meal_timeid")
     private MealTime mealTime;
 
-    public Meal getMeal() {
-        return meal;
-    }
-
-    public void setMeal(Meal meal) {
-        this.meal = meal;
-    }
-
-    public MealTime getMealTime() {
-        return mealTime;
-    }
-
-    public void setMealTime(MealTime mealTime) {
-        this.mealTime = mealTime;
-    }
 }

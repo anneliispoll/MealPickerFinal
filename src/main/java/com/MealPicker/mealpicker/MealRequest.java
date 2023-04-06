@@ -14,10 +14,14 @@ import java.util.List;
 public class MealRequest {
     @JsonProperty("name")
     private String name;
+
+
     @JsonProperty("seasonNames")
     private List<String> seasonNames;
+
+
     @JsonProperty("mealTimeNames")
     private List<String> mealTimeNames;
-
-
 }
+
+

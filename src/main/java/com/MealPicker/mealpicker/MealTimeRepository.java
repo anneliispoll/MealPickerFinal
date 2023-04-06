@@ -7,5 +7,5 @@ import java.util.Optional;
 public interface MealTimeRepository extends JpaRepository<MealTime, Integer> {
     Optional<MealTime> findByName(String mealTimeName);
 
-    Optional<MealTime> findById(int id);
+
 }

@@ -30,9 +30,6 @@ public class MealTime {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -42,6 +39,4 @@ public class MealTime {
         this.name = name;
     }
 
-    public void addMeal(Meal one) {
-    }
 }

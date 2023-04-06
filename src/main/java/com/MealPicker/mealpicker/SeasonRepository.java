@@ -8,6 +8,6 @@ public interface SeasonRepository extends JpaRepository <Season, Integer> {
 
     Optional<Season> findByName(String seasonName);
 
-    Optional<Season> findById(int seasonId);
+
 
 }

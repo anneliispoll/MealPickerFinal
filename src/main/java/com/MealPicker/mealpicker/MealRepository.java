@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface MealRepository extends JpaRepository<Meal, Integer> {
@@ -42,7 +41,7 @@ public interface MealRepository extends JpaRepository<Meal, Integer> {
     @Transactional
     @Modifying
     @Query(nativeQuery = true, value = "INSERT INTO meal_seasons (MealID, SeasonID) " +
-            "SELECT :mealId, :seasonIds")
+            "SELECT :mealId, SeasonID FROM seasons WHERE SeasonID IN (:seasonIds)")
     void addMealToSeasons(@Param("mealId") int mealId, @Param("seasonIds") List<Integer> seasonIds);
 
     @Query(nativeQuery = true, value = "SELECT mt.meal_timeid FROM meal_times mt WHERE mt.meal_time_name = :mealTimeNames")
@@ -52,12 +51,9 @@ public interface MealRepository extends JpaRepository<Meal, Integer> {
     @Transactional
     @Modifying
     @Query(nativeQuery = true, value = "INSERT INTO meal_meal_times(MealID, meal_timeid) " +
-            "SELECT :mealId, :mealTimeIds")
+            "SELECT :mealId, meal_timeid FROM meal_times WHERE meal_timeid IN (:mealTimeIds)")
     void addMealToMealTimes(@Param("mealId") int mealId, @Param("mealTimeIds") List<Integer> mealTimeIds);
 
-
-
-    Optional<Meal> findByName(String name);
 
 
 }
