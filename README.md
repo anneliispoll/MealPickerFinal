@@ -39,13 +39,12 @@ POST http://localhost:8080/api/v1/auth/register
 
 Send JSON
 E.g.:
-{
+`{
 "firstname": "Testuser",
 "lastname": "Test",
 "email": "Testing@gmail.com",
 "password": "1234"
-
-}
+}`
 
 Note: you should receive the token for authentication.
 
@@ -54,10 +53,10 @@ POST http://localhost:8080/api/v1/auth/authenticate
 
 Send JSON
 E.g.:
-{
+`{
 "email": "Testing@gmail.com",
 "password": "1234"
-}
+}`
 
 Note: you should receive the token for authentication.
 
@@ -76,9 +75,9 @@ POST http://localhost:8080/api/v1/auth/add
 
 Send JSON
 
-{
+`{
 "name": "Pizza",
 "mealTimeNames": ["dinner", "lunch"],
 "seasonNames": ["spring","summer","autumn","winter"]
-}
+}`
 NB! To be authenticated, you should add the Bearer token that you got from the login under the Authorization to be able to reach to the API endpoint
