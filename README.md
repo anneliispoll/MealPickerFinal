@@ -15,5 +15,10 @@ As we all prefer different things on different seasons.
 ## How to start
 Side notes:
 This project is built with using Maven.
+Clone the repo form GitHub to IntelliJ (or similar application).
 It also uses MySQL as database server.
+You should create a new MYSQL database and add it's name, your username and password to connect with the database. This can be done under the resources-> application.properties file.
+SQL querys are also added to this repo.
+SQL queries to create _user table to store user information and MealPicker Database queries to create default database with some test data.
+
 Clone the project and open it from your 
