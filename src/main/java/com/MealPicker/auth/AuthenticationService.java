@@ -20,8 +20,15 @@ public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
+    public boolean isEmailAlreadyRegistered(String email) {
+        return repository.findByEmail(email).isPresent();
+    }
+
 
     public AuthenticationResponse register(RegisterRequest request) {
+        if (isEmailAlreadyRegistered(request.getEmail())) {
+            throw new RuntimeException("Email already registered");
+        }
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
