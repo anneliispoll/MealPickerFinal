@@ -32,5 +32,53 @@ Using API calls you can store user data in the database and get the user data fo
 Non-authenticated user cannot reach to the API endpoint and use the MealPicker application.
 With the API calls authenticated user can get random meals from MealPicker database and also can add new meals to the database.
 
+Use POSTMAN to use only the server side code.
 
+### For registering:
+POST http://localhost:8080/api/v1/auth/register
 
+Send JSON
+E.g.:
+{
+"firstname": "Testuser",
+"lastname": "Test",
+"email": "Testing@gmail.com",
+"password": "1234"
+
+}
+
+Note: you should receive the token for authentication.
+
+### For login:
+POST http://localhost:8080/api/v1/auth/authenticate
+
+Send JSON
+E.g.:
+{
+"email": "Testing@gmail.com",
+"password": "1234"
+}
+
+Note: you should receive the token for authentication.
+
+### Getting random meal from MealPicker
+GET http://localhost:8080/api/v1/auth/random?seasonName=winter&mealTimeName=dinner
+
+Send
+
+Note:
+seasonName can be: spring, summer, autumn, winter
+mealTimeName can be: breakfast, lunch, dinner
+
+NB! To be authenticated, you should add the Bearer token that you got from the login under the Authorization to be able to reach to the API endpoint
+### Adding new meal to the database
+POST http://localhost:8080/api/v1/auth/add
+
+Send JSON
+
+{
+"name": "Pizza",
+"mealTimeNames": ["dinner", "lunch"],
+"seasonNames": ["spring","summer","autumn","winter"]
+}
+NB! To be authenticated, you should add the Bearer token that you got from the login under the Authorization to be able to reach to the API endpoint
